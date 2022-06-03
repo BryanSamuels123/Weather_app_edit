@@ -92,13 +92,13 @@ const loadWeather = (event) =>{
     }
 }
 
-const displayHomeLocationWeather= (home) =>{
+const displayHomeLocationWeather= async (home) =>{
     if (typeof home === "string"){
         const locationJson = JSON.parse(home);
         const myCoordsObj = {
             lat: locationJson.lat,
             lon: locationJson.lon,
-            name:  locationJson.name,
+            name:  await getNameFromCoord(locationJson.lat, locationJson.lon),
             unit: locationJson.unit
         };
         setLocationObject(currentLoc, myCoordsObj);
