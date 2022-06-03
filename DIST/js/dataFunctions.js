@@ -95,9 +95,9 @@ export const getNameFromCoord = async (lat, lon) =>{
             method: "POST",
             body: JSON.stringify(urlDataObj)
         });
-        const nameJson = await dataStream.json();
+        const nameJson = await nameStream.json();
         if (nameJson[0].country === "US"){
-            return `${locNameJson[0].name}, ${locNameJson[0].state}`
+            return `${nameJson[0].name}, ${nameJson[0].state}`
                 }
                 return `${nameJson[0].name}, ${nameJson[0].country}`; 
     } catch(err){
