@@ -85,18 +85,37 @@ export const cleanText = (text) =>{
 }
 
 export const getNameFromCoord = async (lat, lon) =>{
-    const url = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=2&appid=${WEATHER_API_KEY}`;
 
+    const urlDataObj = {
+        lat: lat,
+        lon: lon
+    };
     try{
-        const locNameStream = await fetch(url);
-        const locNameJson = await locNameStream.json();
-        if (locNameJson[0].country === "US"){
+        const nameStream = await fetch('./.netlify/functions/get_name_from_coords', {
+            method: "POST",
+            body: JSON.stringify(urlDataObj)
+        });
+        const nameJson = await dataStream.json();
+        if (nameJson[0].country === "US"){
             return `${locNameJson[0].name}, ${locNameJson[0].state}`
-        }
-        return `${locNameJson[0].name}, ${locNameJson[0].country}`; 
+                }
+                return `${nameJson[0].name}, ${nameJson[0].country}`; 
+    } catch(err){
+        console.error(err);
     }
-    catch (err){
-        console.log(err.stack);
-        return `Lat: ${lat}, Lon: ${lon}`;
-    }
+
+//     const url = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=2&appid=${WEATHER_API_KEY}`;
+
+//     try{
+//         const locNameStream = await fetch(url);
+//         const locNameJson = await locNameStream.json();
+//         if (locNameJson[0].country === "US"){
+//             return `${locNameJson[0].name}, ${locNameJson[0].state}`
+//         }
+//         return `${locNameJson[0].name}, ${locNameJson[0].country}`; 
+//     }
+//     catch (err){
+//         console.log(err.stack);
+//         return `Lat: ${lat}, Lon: ${lon}`;
+//     }
 }

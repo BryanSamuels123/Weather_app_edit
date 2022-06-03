@@ -62,11 +62,11 @@ const geoError = (errObj) => {
     displayErr(errMsg, errMsg);
 };
 
-const geoSuccess = /*async*/ (position) =>{
+const geoSuccess = async (position) =>{
     const myCoordsObj = {
         lat: position.coords.latitude,
         lon: position.coords.longitude,
-        name: `Lat: ${position.coords.latitude}, Lon: ${position.coords.longitude}`//await getNameFromCoord(position.coords.latitude, position.coords.longitude) // this is mine not from tutorial.
+        name: await getNameFromCoord(position.coords.latitude, position.coords.longitude) // this is mine not from tutorial.
     };
     
 
@@ -152,7 +152,9 @@ const submitNewLocation = async (event) =>{
             const myCoordsObj = {
                 lat: coordsData.coord.lat,
                 lon: coordsData.coord.lon,
-                name: (coordsData.sys.country) ? `${coordsData.name}, ${coordsData.sys.country}` : coordsData.name
+                 name: await getNameFromCoord(coordsData.coord.lat, coordsData.coord.lon)
+                 
+                 /*(coordsData.sys.country) ? `${coordsData.name}, ${coordsData.sys.country}` : coordsData.name*/
             };
             //console.log(myCoordsObj); //
             setLocationObject(currentLoc, myCoordsObj);
